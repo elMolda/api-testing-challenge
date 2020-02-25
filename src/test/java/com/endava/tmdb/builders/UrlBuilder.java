@@ -25,14 +25,14 @@ public class UrlBuilder {
     }
 
     public UrlBuilder addParamKey(String param){
-        String last = path.get(path.size());
+        String last = path.get(path.size()-1);
         int indexOfLast = path.indexOf(last);
-        path.set(indexOfLast, last + '?' + param + '=');
+        path.set(indexOfLast, last + "?" + param + "=");
         return this;
     }
 
     public UrlBuilder addParamValue(String value){
-        String last = path.get(path.size());
+        String last = path.get(path.size()-1);
         int indexOfLast = path.indexOf(last);
         path.set(indexOfLast, last + value);
         return this;

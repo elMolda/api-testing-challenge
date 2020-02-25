@@ -35,8 +35,8 @@ public class AuthenticationSteps {
 
     @And("^The response body contains the request token$")
     public void theResponseBodyContainsTheRequestToken() {
-        AuthResponse[] authResponseList = JsonHelper.authResponseToArray(response);
+        AuthResponse authResponse = JsonHelper.authResponseBodyToObject(response);
         Assert.assertThat("Error: Body does not contain requestToken",
-                authResponseList[0].getRequest_token(), Matchers.notNullValue());
+                authResponse.getRequest_token(), Matchers.notNullValue());
     }
 }

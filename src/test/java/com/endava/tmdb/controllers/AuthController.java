@@ -34,7 +34,6 @@ public class AuthController implements IApiController{
                 .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
-        System.out.println(url.toString());
         this.response = requestSpecification.when().get(url);
         return response;
     }
