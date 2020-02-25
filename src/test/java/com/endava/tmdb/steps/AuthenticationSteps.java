@@ -39,4 +39,17 @@ public class AuthenticationSteps {
         Assert.assertThat("Error: Body does not contain requestToken",
                 authResponse.getRequest_token(), Matchers.notNullValue());
     }
+
+    @When("^User sends request to authorize with$")
+    public void userSendsRequestToAuthorizeWith(DataTable dataTable) {
+        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
+        String username = data.get(0).get("username");
+        String password = data.get(0).get("password");
+        response = Serenity.sessionVariableCalled("response");
+        AuthResponse authResponse= JsonHelper.authResponseBodyToObject(response);
+        authResponse.setPassword(password);
+        authResponse.setUsername(username);
+        response = authController.post("ask",authResponse,api_key);
+        Serenity.setSessionVariable("response").to(response);
+    }
 }

@@ -1,6 +1,8 @@
 package com.endava.tmdb.controllers;
 
 import com.endava.tmdb.builders.UrlBuilder;
+import com.endava.tmdb.entities.AuthResponse;
+import com.endava.tmdb.helpers.JsonHelper;
 import com.endava.tmdb.helpers.PropertiesHelper;
 import io.restassured.response.Response;
 
@@ -38,16 +40,24 @@ public class AuthController implements IApiController{
         return response;
     }
 
-    public Response post(String operation) {
+    public Response post(String operation, AuthResponse authResponse, String api_key) {
         if (operation.equals("ask")) {
-            this.response = this.askPermission();
+            this.response = this.askPermission(authResponse,api_key);
         }else if (operation.equals("generate")) {
             this.response = this.generateSessionId();
         }
         return this.response;
     }
 
-    private Response askPermission() {
+    private Response askPermission(AuthResponse authResponse, String api_key) {
+        url = new UrlBuilder(baseUrl)
+                .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
+                .addPathStep(PropertiesHelper.getValueByKey("token"))
+                .addPathStep(PropertiesHelper.getValueByKey("validate"))
+                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addParamValue(api_key)
+                .build();
+        this.response = requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
         return this.response;
     }
 
