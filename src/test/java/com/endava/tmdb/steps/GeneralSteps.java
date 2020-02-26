@@ -13,6 +13,6 @@ public class GeneralSteps {
     public void theServiceRespondsWithAStatusCode(String statusCode) throws Throwable {
         response = Serenity.sessionVariableCalled("response");
         Assert.assertThat(String.format("Error: The status code is not %s", statusCode),
-                response.statusCode(), Matchers.equalTo(200));
+                response.statusCode(), Matchers.equalTo(Integer.parseInt(statusCode)));
     }
 }

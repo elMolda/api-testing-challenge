@@ -44,7 +44,7 @@ public class AuthController implements IApiController{
         if (operation.equals("ask")) {
             this.response = this.askPermission(authResponse,api_key);
         }else if (operation.equals("generate")) {
-            this.response = this.generateSessionId();
+            this.response = this.generateSessionId(authResponse, api_key);
         }
         return this.response;
     }
@@ -61,7 +61,16 @@ public class AuthController implements IApiController{
         return this.response;
     }
 
-    private Response generateSessionId() {
+    private Response generateSessionId(AuthResponse authResponse, String api_key) {
+        url = new UrlBuilder(baseUrl)
+                .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
+                .addPathStep(PropertiesHelper.getValueByKey("session"))
+                .addPathStep(PropertiesHelper.getValueByKey("new"))
+                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addParamValue(api_key)
+                .build();
+        System.out.println(JsonHelper.objectToJson(authResponse));
+        this.response = requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
         return this.response;
     }
 }
