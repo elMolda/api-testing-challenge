@@ -20,15 +20,33 @@ public class AuthController implements IApiController{
 
     public Response get(){ return  null; }
 
-    public Response getWithParam(String param) {
-        return this.getRequestToken(param);
+    public Response getWithParam(String param, String operation)
+    {
+        if (operation.equals("reqToken")) {
+            return this.getRequestToken(param);
+        }else if (operation.equals("guest")) {
+            return this.getGuestSession(param);
+        }
+        return null;
     }
 
     public void setResponse(Response response) {
         this.response = response;
     }
 
-    public Response getRequestToken(String api_key) {
+    private Response getGuestSession(String api_key) {
+        url = new UrlBuilder(baseUrl)
+                .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
+                .addPathStep(PropertiesHelper.getValueByKey("guest_session"))
+                .addPathStep(PropertiesHelper.getValueByKey("new"))
+                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addParamValue(api_key)
+                .build();
+        this.response = requestSpecification.when().get(url);
+        return response;
+    }
+
+    private Response getRequestToken(String api_key) {
         url = new UrlBuilder(baseUrl)
                 .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
                 .addPathStep(PropertiesHelper.getValueByKey("token"))
@@ -69,7 +87,6 @@ public class AuthController implements IApiController{
                 .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
-        System.out.println(JsonHelper.objectToJson(authResponse));
         this.response = requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
         return this.response;
     }
