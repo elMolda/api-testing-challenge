@@ -1,7 +1,5 @@
 Feature: Authentication
 
-
-
   Scenario: Get session id
     Given User has api key
       | api_key                          |

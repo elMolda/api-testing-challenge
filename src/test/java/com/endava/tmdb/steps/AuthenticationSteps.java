@@ -11,7 +11,6 @@ import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import net.serenitybdd.core.Serenity;
 import org.hamcrest.Matchers;
-import org.jruby.RubyBoolean;
 import org.junit.Assert;
 
 import java.util.List;
