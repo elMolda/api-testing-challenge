@@ -30,7 +30,7 @@ public class AuthenticationSteps {
 
     @When("^The user sends a request to get a token$")
     public void theUserSendsARequestToGetAToken() {
-        response = authController.getWithParam(api_key);
+        response = authController.getWithParam(api_key,"reqToken");
         Serenity.setSessionVariable("response").to(response);
     }
 
@@ -69,9 +69,23 @@ public class AuthenticationSteps {
     @And("^The response body contains a session id$")
     public void theResponseBodyContainsASessionId() {
         AuthResponse authResponse = JsonHelper.authResponseBodyToObject(response);
-        System.out.println("Session_id:"+authResponse.getSession_id());
         Assert.assertThat("Error: Body does not contain session_id",
                 authResponse.getSession_id(), Matchers.notNullValue());
+        Assert.assertThat("Error: Success is not true",
+                authResponse.isSuccess(), Matchers.is(true));
+    }
+
+    @When("^The user sends a request to get a guest session id$")
+    public void theUserSendsARequestToGetAGuestSessionId() {
+        response = authController.getWithParam(api_key,"guest");
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+    @And("^The response body contains a guest session id$")
+    public void theResponseBodyContainsAGuestSessionId() {
+        AuthResponse authResponse = JsonHelper.authResponseBodyToObject(response);
+        Assert.assertThat("Error: Body does not contain session_id",
+                authResponse.getGuest_session_id(), Matchers.notNullValue());
         Assert.assertThat("Error: Success is not true",
                 authResponse.isSuccess(), Matchers.is(true));
     }

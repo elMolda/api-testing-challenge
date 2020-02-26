@@ -1,6 +1,6 @@
 Feature: Authentication
 
-  Scenario: Get session id
+  Scenario: Create session with a session id
     Given User has api key
       | api_key                          |
       | 419f2f4be9b38e5b129c579a32277eb5 |

@@ -10,5 +10,4 @@ public interface IApiController {
     RequestSpecification requestSpecification = RestAssured.given().contentType(ContentType.JSON);
     String baseUrl = PropertiesHelper.getValueByKey("url.base");
     Response get();
-    Response getWithParam(String param);
 }

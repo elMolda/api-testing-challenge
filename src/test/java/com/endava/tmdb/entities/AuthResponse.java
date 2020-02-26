@@ -7,6 +7,11 @@ public class AuthResponse {
     private String session_id;
     private String username;
     private String password;
+    private String guest_session_id;
+
+    public String getGuest_session_id() {
+        return guest_session_id;
+    }
 
     public String getUsername() {
         return username;
