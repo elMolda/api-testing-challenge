@@ -1,6 +1,6 @@
 Feature: Authentication
 
-  Scenario: Delete session using session id
+  Scenario: Create session with a session id
     Given User has api key
       | api_key                          |
       | 419f2f4be9b38e5b129c579a32277eb5 |
@@ -12,9 +12,6 @@ Feature: Authentication
       | elMolda  | ABR06nov |
     And The service responds with a status code "200"
     And The response body contains the request token
-    And The user sends a request to get session id
-    And The service responds with a status code "200"
-    And The response body contains a session id
-    When The user sends a request to delete session
+    When  The user sends a request to get session id
     Then The service responds with a status code "200"
-    And The response body success is true
+    And The response body contains a session id

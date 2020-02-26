@@ -70,6 +70,10 @@ public class AuthResponse {
                 "success=" + success +
                 ", expires_at='" + expires_at + '\'' +
                 ", request_token='" + request_token + '\'' +
+                ", session_id='" + session_id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", guest_session_id='" + guest_session_id + '\'' +
                 '}';
     }
 }
