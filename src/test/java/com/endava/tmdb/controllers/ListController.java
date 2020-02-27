@@ -6,6 +6,7 @@ import com.endava.tmdb.helpers.JsonHelper;
 import com.endava.tmdb.helpers.PropertiesHelper;
 import io.restassured.response.Response;
 import net.serenitybdd.core.Serenity;
+import org.yecht.Data;
 
 import java.net.URL;
 
@@ -22,8 +23,25 @@ public class ListController extends IApiController{
     public Response post(List list, String operation) {
         if (operation.equals("create")){
             return this.createList(list);
+        } else if (operation.equals("add_item")) {
+            return this.addItemToList(list);
         }
         return null;
+    }
+
+    private Response addItemToList(List list) {
+        url = new UrlBuilder(baseUrl)
+                .addEndPoint(PropertiesHelper.getValueByKey("list.endpoint"))
+                .addPathStep(String.valueOf(list.getList_id()))
+                .addPathStep(PropertiesHelper.getValueByKey("op.add_item"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addParamValue(PropertiesHelper.getValueByKey("value.api_key"))
+                .addSessionId(PropertiesHelper.getValueByKey("param.session_id"))
+                .addParamValue(Serenity.sessionVariableCalled("session_id"))
+                .build();
+        String json = JsonHelper.objectToJson(list);
+        refreshRequestSpecification();
+        return requestSpecification.body(json).post(url);
     }
 
     private Response getList(int list_id) {

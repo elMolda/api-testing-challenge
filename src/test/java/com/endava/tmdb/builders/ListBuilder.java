@@ -12,6 +12,11 @@ public class ListBuilder {
         return this;
     }
 
+    public ListBuilder withMediaIdToAdd(int media_id) {
+        list.setMedia_id(media_id);
+        return this;
+    }
+
     public ListBuilder withName(String name) {
         list.setName(name);
         return this;

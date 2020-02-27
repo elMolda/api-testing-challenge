@@ -9,8 +9,17 @@ public class List {
     private int list_id;
     private int item_count;
     private int status_code;
+    private int media_id;
 
     public List() {
+    }
+
+    public int getMedia_id() {
+        return media_id;
+    }
+
+    public void setMedia_id(int media_id) {
+        this.media_id = media_id;
     }
 
     public String getName() {
@@ -88,6 +97,7 @@ public class List {
                 ", list_id=" + list_id +
                 ", item_count=" + item_count +
                 ", status_code=" + status_code +
+                ", media_id=" + media_id +
                 '}';
     }
 }

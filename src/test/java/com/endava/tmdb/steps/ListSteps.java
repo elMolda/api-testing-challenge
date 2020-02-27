@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
+import jnr.ffi.annotations.In;
 import net.serenitybdd.core.Serenity;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -31,7 +32,6 @@ public class ListSteps {
                 .withDescription(description)
                 .withLanguage(language)
                 .build();
-        System.out.println(list.toString());
     }
 
     @When("^The user sends a request to create list$")
@@ -74,5 +74,18 @@ public class ListSteps {
     public void theResponseBodyContainsDescription() {
         Assert.assertThat("Error response does not contain name",
                 response.jsonPath().get("description"), Matchers.notNullValue());
+    }
+
+    @When("^The user sends a request to add item to list with$")
+    public void theUserSendsARequestToAddItemToListWith(DataTable dataTable) {
+        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
+        int media_id = Integer.parseInt(data.get(0).get("media_id"));
+        list = new ListBuilder()
+                .withListId(Serenity.sessionVariableCalled("list_id"))
+                .withMediaIdToAdd(media_id)
+                .build();
+        System.out.println(list.toString());
+        response = listController.post(list,"add_item");
+        Serenity.setSessionVariable("response").to(response);
     }
 }
