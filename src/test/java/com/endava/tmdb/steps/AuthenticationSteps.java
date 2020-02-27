@@ -89,4 +89,23 @@ public class AuthenticationSteps {
         Assert.assertThat("Error: Success is not true",
                 authResponse.isSuccess(), Matchers.is(true));
     }
+
+    @When("^The user sends a request to delete session$")
+    public void theUserSendsARequestToDeleteSession() {
+        response = Serenity.sessionVariableCalled("response");
+        AuthResponse authResponse= JsonHelper.authResponseBodyToObject(response);
+        String session_id = authResponse.getSession_id();
+        AuthResponse auth = new AuthResponseBuilder()
+                .withSessionId(session_id)
+                .build();
+        response =  authController.delete(auth,api_key);
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+    @And("^The response body success is true$")
+    public void theResponseBodySuccessIsTrue() {
+        AuthResponse authResponse = JsonHelper.authResponseBodyToObject(response);
+        Assert.assertThat("Error: Success is not true",
+                authResponse.isSuccess(), Matchers.is(true));
+    }
 }
