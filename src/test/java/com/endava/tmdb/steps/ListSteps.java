@@ -42,6 +42,7 @@ public class ListSteps {
 
     @And("^The response body contains a status_code \"([^\"]*)\"$")
     public void theResponseBodyContainsAStatus_code(String status_code) throws Throwable {
+        response = Serenity.sessionVariableCalled("response");
         Assert.assertThat(String.format("Error: The status code is not %s", status_code),
                 response.jsonPath().get("status_code"), Matchers.equalTo(Integer.parseInt(status_code)));
     }
