@@ -24,7 +24,7 @@ public class UrlBuilder {
         return this;
     }
 
-    public UrlBuilder addParamKey(String param){
+    public UrlBuilder addApiKey(String param){
         String last = path.get(path.size()-1);
         int indexOfLast = path.indexOf(last);
         path.set(indexOfLast, last + "?" + param + "=");
@@ -35,6 +35,14 @@ public class UrlBuilder {
         String last = path.get(path.size()-1);
         int indexOfLast = path.indexOf(last);
         path.set(indexOfLast, last + value);
+        return this;
+    }
+
+
+    public UrlBuilder addSessionId(String session_id) {
+        String last = path.get(path.size()-1);
+        int indexOfLast = path.indexOf(last);
+        path.set(indexOfLast, last + "&" + session_id + "=");
         return this;
     }
 
