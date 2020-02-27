@@ -47,7 +47,36 @@ public class ListSteps {
 
     @And("^The response body contains a list id$")
     public void theResponseBodyContainsAListId() {
+        int list_id = response.jsonPath().get("list_id");
         Assert.assertThat(String.format("Error: Response does not contain list_id"),
-                response.jsonPath().get("list_id"), Matchers.notNullValue());
+                list_id, Matchers.notNullValue());
+        Serenity.setSessionVariable("list_id").to(list_id);
+    }
+
+    @When("^The user sends a request to get a list$")
+    public void theUserSendsARequestToGetAList() {
+        response = listController.get(list.getList_id());
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+    @And("^The response body contains name$")
+    public void theResponseBodyContainsName() {
+        Assert.assertThat("Error response does not contain name",
+                response.jsonPath().get("name"), Matchers.notNullValue());
+    }
+
+    @And("^The response body contains description$")
+    public void theResponseBodyContainsDescription() {
+        Assert.assertThat("Error response does not contain name",
+                response.jsonPath().get("description"), Matchers.notNullValue());
+    }
+
+    @Given("^A list exists with$")
+    public void aListExistsWith(DataTable dataTable) {
+        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
+        int list_id = Integer.parseInt(data.get(0).get("list_id"));
+        list = new ListBuilder()
+               .withListId(list_id)
+               .build();
     }
 }

@@ -7,6 +7,11 @@ public class ListBuilder {
 
     public ListBuilder() { this.list = new List(); }
 
+    public ListBuilder withListId(int listId) {
+        list.setList_id(listId);
+        return this;
+    }
+
     public ListBuilder withName(String name) {
         list.setName(name);
         return this;

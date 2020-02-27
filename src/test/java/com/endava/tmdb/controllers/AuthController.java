@@ -8,7 +8,7 @@ import io.restassured.response.Response;
 
 import java.net.URL;
 
-public class AuthController implements IApiController{
+public class AuthController extends IApiController{
     private URL url;
     public AuthController() {
     }
@@ -34,6 +34,7 @@ public class AuthController implements IApiController{
                 .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().get(url);
     }
 
@@ -45,6 +46,7 @@ public class AuthController implements IApiController{
                 .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().get(url);
     }
 
@@ -65,6 +67,7 @@ public class AuthController implements IApiController{
                 .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
     }
 
@@ -76,6 +79,7 @@ public class AuthController implements IApiController{
                 .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
     }
 
@@ -86,6 +90,7 @@ public class AuthController implements IApiController{
                 .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.body(JsonHelper.objectToJson(authResponse)).delete(url);
     }
 }

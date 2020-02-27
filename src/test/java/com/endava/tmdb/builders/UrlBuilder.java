@@ -46,6 +46,13 @@ public class UrlBuilder {
         return this;
     }
 
+    public UrlBuilder addLanguage(String lang) {
+        String last = path.get(path.size()-1);
+        int indexOfLast = path.indexOf(last);
+        path.set(indexOfLast, last + "&" + "language" + "=" + lang);
+        return this;
+    }
+
     public URL build(){
         try {
             return new URL(baseUrl +"/"+String.join("/", path));

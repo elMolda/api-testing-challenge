@@ -6,7 +6,7 @@ public class List {
     private String language;
     private String created_by;
     private int favorite_count;
-    private String id;
+    private int list_id;
     private int item_count;
     private int status_code;
 
@@ -53,14 +53,6 @@ public class List {
         this.favorite_count = favorite_count;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public int getItem_count() {
         return item_count;
     }
@@ -75,5 +67,13 @@ public class List {
 
     public void setStatus_code(int status_code) {
         this.status_code = status_code;
+    }
+
+    public int getList_id() {
+        return list_id;
+    }
+
+    public void setList_id(int list_id) {
+        this.list_id = list_id;
     }
 }

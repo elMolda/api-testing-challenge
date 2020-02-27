@@ -15,11 +15,20 @@ Feature: List management
     Then The service responds with a status code "200"
     And The response body contains a session id
 
-  Scenario: Create list
+
+  Scenario: Create List
     Given User has list basic data
-      | name        | description    | language |
-      | My Try List | My description |    en    |
+      |name     |description       |language|
+      |mynewlist|this is a new list|en      |
     When The user sends a request to create list
-    Then The service responds with a status code "201"
     And The response body contains a status_code "1"
     And The response body contains a list id
+
+  Scenario: Retrieve list
+    Given A list exists with
+      | list_id |
+      | 133849  |
+    When The user sends a request to get a list
+    Then The service responds with a status code "200"
+    And The response body contains name
+    And The response body contains description

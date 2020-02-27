@@ -9,11 +9,15 @@ import net.serenitybdd.core.Serenity;
 
 import java.net.URL;
 
-public class ListController implements IApiController{
+public class ListController extends IApiController{
 
     private URL url;
 
     public Response get() { return null; }
+
+    public Response get(int list_id) {
+        return this.getList(list_id);
+    }
 
     public Response post(List list, String operation) {
         if (operation.equals("create")){
@@ -21,6 +25,19 @@ public class ListController implements IApiController{
         }
         return null;
     }
+
+    private Response getList(int list_id) {
+        url = new UrlBuilder(baseUrl)
+            .addEndPoint(PropertiesHelper.getValueByKey("list.endpoint"))
+            .addPathStep(String.valueOf(list_id))
+            .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
+            .addParamValue(PropertiesHelper.getValueByKey("value.api_key"))
+            .addLanguage(PropertiesHelper.getValueByKey("lang.en"))
+            .build();
+        refreshRequestSpecification();
+        return requestSpecification.get(url);
+    }
+
 
     private Response createList(List list) {
         url = new UrlBuilder(baseUrl)
@@ -30,7 +47,8 @@ public class ListController implements IApiController{
             .addSessionId(PropertiesHelper.getValueByKey("param.session_id"))
             .addParamValue(Serenity.sessionVariableCalled("session_id"))
             .build();
-        System.out.println(url.toString());
+        refreshRequestSpecification();
         return requestSpecification.body(JsonHelper.objectToJson(list)).post(url);
     }
+
 }
