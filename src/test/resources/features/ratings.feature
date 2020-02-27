@@ -23,3 +23,10 @@ Feature: Ratings
     Then The service responds with a status code "201"
     And The response body contains a status_code
 
+  Scenario: Rate a tv show
+    Given User has tv id and a value
+      |tv_id    |value|
+      |1396   | 10  |
+    When User sends request to rate a tv show
+    Then The service responds with a status code "201"
+    And The response body contains a status_code

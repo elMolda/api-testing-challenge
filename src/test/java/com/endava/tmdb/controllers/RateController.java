@@ -19,7 +19,7 @@ public class RateController extends IApiController {
         if (to_rate.equals("movie")){
             return this.rateMovie(rate);
         } else if (to_rate.equals("tv_show")) {
-            //return this.rateTvShow(rate);
+            return this.rateTvShow(rate);
         } else if (to_rate.equals("tv_episode")){
             //return this.rateTvEpisode(rate);
         }
@@ -36,7 +36,20 @@ public class RateController extends IApiController {
                 .addSessionId(PropertiesHelper.getValueByKey("param.session_id"))
                 .addParamValue(Serenity.sessionVariableCalled("session_id"))
                 .build();
-        System.out.println(url.toString());
+        refreshRequestSpecification();
+        return requestSpecification.body(JsonHelper.objectToJson(rate)).post(url);
+    }
+
+    private Response rateTvShow(Rate rate) {
+        url = new UrlBuilder(baseUrl)
+                .addEndPoint(PropertiesHelper.getValueByKey("tv.endpoint"))
+                .addPathStep(rate.getTv_id())
+                .addPathStep(PropertiesHelper.getValueByKey("op.rating"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addParamValue(PropertiesHelper.getValueByKey("value.api_key"))
+                .addSessionId(PropertiesHelper.getValueByKey("param.session_id"))
+                .addParamValue(Serenity.sessionVariableCalled("session_id"))
+                .build();
         refreshRequestSpecification();
         return requestSpecification.body(JsonHelper.objectToJson(rate)).post(url);
     }

@@ -20,6 +20,11 @@ public class RateBuilder {
         return this;
     }
 
+    public RateBuilder withTvId(String tvId) {
+        this.rate.setTv_id(tvId);
+        return this;
+    }
+
     public Rate build() {
         return this.rate;
     }

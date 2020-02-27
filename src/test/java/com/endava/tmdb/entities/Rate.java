@@ -3,9 +3,18 @@ package com.endava.tmdb.entities;
 
 public class Rate {
     private String movie_id;
+    private String tv_id;
     private int value;
 
     public Rate() {
+    }
+
+    public String getTv_id() {
+        return tv_id;
+    }
+
+    public void setTv_id(String tv_id) {
+        this.tv_id = tv_id;
     }
 
     public String getMovie_id() {

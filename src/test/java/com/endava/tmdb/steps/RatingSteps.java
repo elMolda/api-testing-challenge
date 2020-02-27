@@ -46,4 +46,21 @@ public class RatingSteps {
         Assert.assertThat("Invalid status code", response.jsonPath().get("status_code"),
                 Matchers.isOneOf(validCodes));
     }
+
+    @Given("^User has tv id and a value$")
+    public void userHasTvIdAndAValue(DataTable dataTable) {
+        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
+        String movie_id = data.get(0).get("tv_id");
+        int value = Integer.parseInt(data.get(0).get("value"));
+        rate = new RateBuilder()
+                .withTvId(movie_id)
+                .withValue(value)
+                .build();
+    }
+
+    @When("^User sends request to rate a tv show$")
+    public void userSendsRequestToRateATvShow() {
+        response = rateController.post(rate,"tv_show");
+        Serenity.setSessionVariable("response").to(response);
+    }
 }
