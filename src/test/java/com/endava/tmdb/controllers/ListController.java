@@ -25,8 +25,25 @@ public class ListController extends IApiController{
             return this.createList(list);
         } else if (operation.equals("add_item")) {
             return this.addItemToList(list);
+        } else if (operation.equals("delete_item")){
+            return this.deleteItemFromList(list);
         }
         return null;
+    }
+
+    private Response deleteItemFromList(List list) {
+        url = new UrlBuilder(baseUrl)
+                .addEndPoint(PropertiesHelper.getValueByKey("list.endpoint"))
+                .addPathStep(String.valueOf(list.getList_id()))
+                .addPathStep(PropertiesHelper.getValueByKey("op.remove_item"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addParamValue(PropertiesHelper.getValueByKey("value.api_key"))
+                .addSessionId(PropertiesHelper.getValueByKey("param.session_id"))
+                .addParamValue(Serenity.sessionVariableCalled("session_id"))
+                .build();
+        refreshRequestSpecification();
+        String json = JsonHelper.objectToJson(list);
+        return requestSpecification.body(json).post(url);
     }
 
     private Response addItemToList(List list) {
@@ -55,7 +72,6 @@ public class ListController extends IApiController{
         refreshRequestSpecification();
         return requestSpecification.get(url);
     }
-
 
     private Response createList(List list) {
         url = new UrlBuilder(baseUrl)

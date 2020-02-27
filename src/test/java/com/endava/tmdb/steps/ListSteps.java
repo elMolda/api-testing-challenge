@@ -42,7 +42,6 @@ public class ListSteps {
 
     @And("^The response body contains a status_code \"([^\"]*)\"$")
     public void theResponseBodyContainsAStatus_code(String status_code) throws Throwable {
-        response.prettyPrint();
         Assert.assertThat(String.format("Error: The status code is not %s", status_code),
                 response.jsonPath().get("status_code"), Matchers.equalTo(Integer.parseInt(status_code)));
     }
@@ -84,8 +83,19 @@ public class ListSteps {
                 .withListId(Serenity.sessionVariableCalled("list_id"))
                 .withMediaIdToAdd(media_id)
                 .build();
-        System.out.println(list.toString());
         response = listController.post(list,"add_item");
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+    @When("^The user sends a request to delete item from list with$")
+    public void theUserSendsARequestToDeleteItemFromListWith(DataTable dataTable) {
+        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
+        int media_id = Integer.parseInt(data.get(0).get("media_id"));
+        list = new ListBuilder()
+                .withListId(Serenity.sessionVariableCalled("list_id"))
+                .withMediaIdToAdd(media_id)
+                .build();
+        response = listController.post(list,"delete_item");
         Serenity.setSessionVariable("response").to(response);
     }
 }

@@ -17,16 +17,16 @@ Feature: List management
 
   Scenario: Create List
     Given User has list basic data
-      |name         |description     |language|
-      |What watching| Ill be watching|en      |
+      |name         |description      |language|
+      |What watching| Ill be watching.|en      |
     When The user sends a request to create list
     And The response body contains a status_code "1"
     And The response body contains a list id
 
   Scenario: Retrieve list
     Given User has list basic data
-      |name    |description           |language|
-      |watching|Just movies and series|en      |
+      |name     |description          |language|
+      |watcng   |oviestest and series.|en      |
     When The user sends a request to create list
     And The response body contains a status_code "1"
     And The response body contains a list id
@@ -37,8 +37,8 @@ Feature: List management
 
   Scenario: Add item to list
     Given User has list basic data
-      |name     |description    |language|
-      | testing |Ill be testing |en      |
+      |name      |description      |language|
+      | testingg |IIll be testing. |en      |
     When The user sends a request to create list
     And The response body contains a status_code "1"
     And The response body contains a list id
@@ -47,3 +47,21 @@ Feature: List management
       |496243  |
     Then The service responds with a status code "201"
     And The response body contains a status_code "12"
+
+  Scenario: Remove item from list
+    Given User has list basic data
+      |name       |description        |language|
+      | testinnng |Illll bee tessting. |en      |
+    When The user sends a request to create list
+    And The response body contains a status_code "1"
+    And The response body contains a list id
+    When The user sends a request to add item to list with
+      |media_id|
+      |496243  |
+    Then The service responds with a status code "201"
+    And The response body contains a status_code "12"
+    When The user sends a request to delete item from list with
+      |media_id|
+      |496243  |
+    Then The service responds with a status code "200"
+    And The response body contains a status_code "13"
