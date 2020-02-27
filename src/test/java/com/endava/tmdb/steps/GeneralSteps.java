@@ -12,7 +12,7 @@ public class GeneralSteps {
     @Then("^The service responds with a status code \"([^\"]*)\"$")
     public void theServiceRespondsWithAStatusCode(String statusCode) throws Throwable {
         response = Serenity.sessionVariableCalled("response");
-        Assert.assertThat(String.format("Error: The status code is not %s", statusCode),
+        Assert.assertThat(response.prettyPrint(),
                 response.statusCode(), Matchers.equalTo(Integer.parseInt(statusCode)));
     }
 }

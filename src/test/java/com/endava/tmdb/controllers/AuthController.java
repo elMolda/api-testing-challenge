@@ -8,7 +8,7 @@ import io.restassured.response.Response;
 
 import java.net.URL;
 
-public class AuthController implements IApiController{
+public class AuthController extends IApiController{
     private URL url;
     public AuthController() {
     }
@@ -31,9 +31,10 @@ public class AuthController implements IApiController{
                 .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
                 .addPathStep(PropertiesHelper.getValueByKey("guest_session"))
                 .addPathStep(PropertiesHelper.getValueByKey("new"))
-                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().get(url);
     }
 
@@ -42,9 +43,10 @@ public class AuthController implements IApiController{
                 .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
                 .addPathStep(PropertiesHelper.getValueByKey("token"))
                 .addPathStep(PropertiesHelper.getValueByKey("new"))
-                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().get(url);
     }
 
@@ -62,9 +64,10 @@ public class AuthController implements IApiController{
                 .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
                 .addPathStep(PropertiesHelper.getValueByKey("token"))
                 .addPathStep(PropertiesHelper.getValueByKey("validate"))
-                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
     }
 
@@ -73,9 +76,10 @@ public class AuthController implements IApiController{
                 .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
                 .addPathStep(PropertiesHelper.getValueByKey("session"))
                 .addPathStep(PropertiesHelper.getValueByKey("new"))
-                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.when().body(JsonHelper.objectToJson(authResponse)).and().post(url);
     }
 
@@ -83,9 +87,10 @@ public class AuthController implements IApiController{
         url = new UrlBuilder(baseUrl)
                 .addEndPoint(PropertiesHelper.getValueByKey("auth.endpoint"))
                 .addPathStep(PropertiesHelper.getValueByKey("session"))
-                .addParamKey(PropertiesHelper.getValueByKey("param.api_key"))
+                .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
                 .addParamValue(api_key)
                 .build();
+        refreshRequestSpecification();
         return requestSpecification.body(JsonHelper.objectToJson(authResponse)).delete(url);
     }
 }

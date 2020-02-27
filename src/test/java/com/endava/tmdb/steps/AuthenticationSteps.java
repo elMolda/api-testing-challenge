@@ -73,6 +73,7 @@ public class AuthenticationSteps {
                 authResponse.getSession_id(), Matchers.notNullValue());
         Assert.assertThat("Error: Success is not true",
                 authResponse.isSuccess(), Matchers.is(true));
+        Serenity.setSessionVariable("session_id").to(authResponse.getSession_id());
     }
 
     @When("^The user sends a request to get a guest session id$")
