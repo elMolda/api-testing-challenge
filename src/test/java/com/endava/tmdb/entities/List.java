@@ -76,4 +76,18 @@ public class List {
     public void setList_id(int list_id) {
         this.list_id = list_id;
     }
+
+    @Override
+    public String toString() {
+        return "List{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", language='" + language + '\'' +
+                ", created_by='" + created_by + '\'' +
+                ", favorite_count=" + favorite_count +
+                ", list_id=" + list_id +
+                ", item_count=" + item_count +
+                ", status_code=" + status_code +
+                '}';
+    }
 }

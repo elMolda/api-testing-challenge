@@ -31,6 +31,7 @@ public class ListSteps {
                 .withDescription(description)
                 .withLanguage(language)
                 .build();
+        System.out.println(list.toString());
     }
 
     @When("^The user sends a request to create list$")
@@ -41,6 +42,7 @@ public class ListSteps {
 
     @And("^The response body contains a status_code \"([^\"]*)\"$")
     public void theResponseBodyContainsAStatus_code(String status_code) throws Throwable {
+        response.prettyPrint();
         Assert.assertThat(String.format("Error: The status code is not %s", status_code),
                 response.jsonPath().get("status_code"), Matchers.equalTo(Integer.parseInt(status_code)));
     }
@@ -55,6 +57,9 @@ public class ListSteps {
 
     @When("^The user sends a request to get a list$")
     public void theUserSendsARequestToGetAList() {
+        list = new ListBuilder()
+              .withListId(Serenity.sessionVariableCalled("list_id"))
+              .build();
         response = listController.get(list.getList_id());
         Serenity.setSessionVariable("response").to(response);
     }
@@ -69,14 +74,5 @@ public class ListSteps {
     public void theResponseBodyContainsDescription() {
         Assert.assertThat("Error response does not contain name",
                 response.jsonPath().get("description"), Matchers.notNullValue());
-    }
-
-    @Given("^A list exists with$")
-    public void aListExistsWith(DataTable dataTable) {
-        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
-        int list_id = Integer.parseInt(data.get(0).get("list_id"));
-        list = new ListBuilder()
-               .withListId(list_id)
-               .build();
     }
 }
