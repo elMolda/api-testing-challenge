@@ -60,7 +60,7 @@ public class RateController extends IApiController {
                 .addPathStep(rate.getTv_id())
                 .addPathStep(PropertiesHelper.getValueByKey("season"))
                 .addPathStep(rate.getSeason())
-                .addPathStep(PropertiesHelper.getValueByKey("episose"))
+                .addPathStep(PropertiesHelper.getValueByKey("episode"))
                 .addPathStep(rate.getEpisode())
                 .addPathStep(PropertiesHelper.getValueByKey("op.rating"))
                 .addApiKey(PropertiesHelper.getValueByKey("param.api_key"))
