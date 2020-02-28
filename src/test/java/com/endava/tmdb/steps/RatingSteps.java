@@ -11,6 +11,7 @@ import io.restassured.response.Response;
 import net.serenitybdd.core.Serenity;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.yecht.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class RatingSteps {
     public void userHasMovieIdAndAValue(DataTable dataTable) {
         List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
         String movie_id = data.get(0).get("movie_id");
-        int value = Integer.parseInt(data.get(0).get("value"));
+        double value = Double.parseDouble(data.get(0).get("value"));
         rate = new RateBuilder()
                 .withMovieId(movie_id)
                 .withValue(value)
@@ -50,10 +51,10 @@ public class RatingSteps {
     @Given("^User has tv id and a value$")
     public void userHasTvIdAndAValue(DataTable dataTable) {
         List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
-        String movie_id = data.get(0).get("tv_id");
-        int value = Integer.parseInt(data.get(0).get("value"));
+        String tv_id = data.get(0).get("tv_id");
+        double value = Double.parseDouble(data.get(0).get("value"));
         rate = new RateBuilder()
-                .withTvId(movie_id)
+                .withTvId(tv_id)
                 .withValue(value)
                 .build();
     }
@@ -61,6 +62,27 @@ public class RatingSteps {
     @When("^User sends request to rate a tv show$")
     public void userSendsRequestToRateATvShow() {
         response = rateController.post(rate,"tv_show");
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+    @Given("^User has episode data$")
+    public void userHasEpisodeData(DataTable dataTable) {
+        List<Map<String,String>> data = dataTable.asMaps(String.class,String.class);
+        String tv_id = data.get(0).get("tv_id");
+        String episode = data.get(0).get("episode");
+        String season = data.get(0).get("season");
+        double value = Double.parseDouble(data.get(0).get("value"));
+        rate = new RateBuilder()
+                .withTvId(tv_id)
+                .withEpisode(episode)
+                .withSeason(season)
+                .withValue(value)
+                .build();
+    }
+
+    @When("^User sends request to rate an episode$")
+    public void userSendsRequestToRateAnEpisode() {
+        response = rateController.post(rate,"tv_episode");
         Serenity.setSessionVariable("response").to(response);
     }
 }

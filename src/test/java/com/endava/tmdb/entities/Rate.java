@@ -4,9 +4,27 @@ package com.endava.tmdb.entities;
 public class Rate {
     private String movie_id;
     private String tv_id;
-    private int value;
+    private String episode;
+    private String season;
+    private double value;
 
     public Rate() {
+    }
+
+    public String getEpisode() {
+        return episode;
+    }
+
+    public void setEpisode(String episode) {
+        this.episode = episode;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
     }
 
     public String getTv_id() {
@@ -25,11 +43,11 @@ public class Rate {
         this.movie_id = movie_id;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

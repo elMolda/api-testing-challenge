@@ -30,3 +30,11 @@ Feature: Ratings
     When User sends request to rate a tv show
     Then The service responds with a status code "201"
     And The response body contains a status_code
+
+  Scenario: Rate a tv episode
+    Given User has episode data
+      |tv_id|season|episode|value|
+      |1396 | 5    |  14   | 10  |
+    When User sends request to rate an episode
+    Then The service responds with a status code "201"
+    And The response body contains a status_code
